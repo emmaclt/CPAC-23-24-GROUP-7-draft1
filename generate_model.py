@@ -1,15 +1,17 @@
 from pathlib import Path
 from typing import List
 import mido
-import chain
 from chain import Chain
 from mido import MidiFile, MidiTrack
 from mido import Message, MetaMessage
+import pyOSC3
+import time
 
 state_size=3
-dataset_directory=Path("./maestro-v3.0.0/2014")
+dataset_directory=Path("./maestro-v3.0.0/test")
 chain_output=Path("./model.json")
 MIDI_output=Path("./song.mid")
+midi_text_output=Path("./midi_text.txt")
 fix_input=MIDI_output
 fixMIDI_output=Path("./fix_song.mid")
 
@@ -29,6 +31,8 @@ def encode(file: mido.MidiFile) -> List[str]:
         notes.append(str(message))
 
     return notes
+
+
 
 
 
@@ -104,6 +108,10 @@ print(f"Successfully generated model from {dataset_directory}! Saved to {chain_o
 
 
 
+
+
+
+
 #GENERATE SONG
 '''
 with open(chain_output, "r") as file:
@@ -118,6 +126,47 @@ print(f"Successfully generated song as {MIDI_output}")
 
 
 
+
+
+
+
+
+
+
+#GENERATE CONSTANT OUTPUT STREAM AND SEND IT VIA OSC
+
+BEGIN = "___BEGIN__"
+global state
+state=(BEGIN,) * state_size
+client = pyOSC3.OSCClient()
+client.connect( ( '127.0.0.1', 7001 ) )
+
+def sched(state):
+    next_word = generated_chain.move(state)
+    state = tuple(state[1:]) + (next_word,)
+
+
+    msg = pyOSC3.OSCMessage()
+    msg.setAddress("/0")
+    msg.append(state[len(state)-1])
+    print(msg)
+    client.send(msg)
+    return state
+
+
+x=3  #time between consecutive messages [seconds]
+while True:
+    state=sched(state)
+    time.sleep(x)
+
+
+
+
+
+
+
+
+'''
 #FIX MIDI FILE 
 max_ticks=100
 
@@ -155,3 +204,4 @@ for message in mido.merge_tracks(midi.tracks):
 midi.tracks = [messages]
 midi.save(fixMIDI_output)
 print(f"Successfully fixed midi saved as {fixMIDI_output}")
+'''

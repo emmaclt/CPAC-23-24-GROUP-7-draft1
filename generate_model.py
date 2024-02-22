@@ -6,6 +6,8 @@ from mido import MidiFile, MidiTrack
 from mido import Message, MetaMessage
 import pyOSC3
 import time
+import re
+
 
 state_size=3
 dataset_directory=Path("./maestro-v3.0.0/test")
@@ -147,13 +149,18 @@ def sched(state):
     state = tuple(state[1:]) + (next_word,)
     msg = pyOSC3.OSCMessage()
     msg.setAddress("/0")
-    msg.append(state[len(state)-1])
-    print(msg)
+    print(state[len(state)-1])
+
+
+    temp = re.findall(r'\d+', state[len(state)-1])
+    res = list(map(int, temp))
+    
+    msg.append(res)
     client.send(msg)
     return state
 
 
-x=3  #time between consecutive messages [seconds]
+x=0.1  #time between consecutive messages [seconds]
 while True:
     state=sched(state)
     time.sleep(x)

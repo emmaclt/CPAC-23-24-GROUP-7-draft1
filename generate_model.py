@@ -92,11 +92,11 @@ for filename in dataset_directory.iterdir():
 
 chain = markovify.Chain(dataset, state_size=state_size)
 
-with open(chain_output, "w") as file:
+'''with open(chain_output, "w") as file:
     file.write(chain.to_json())
 
 print(f"Successfully generated model from {dataset_directory}! Saved to {chain_output}")
-
+'''
 
 
 
@@ -104,10 +104,10 @@ print(f"Successfully generated model from {dataset_directory}! Saved to {chain_o
 
 
 #GENERATE SONG
-
+'''
 with open(chain_output, "r") as file:
     chain = Chain.from_json(file.read())
-
+'''
 text = chain.walk()
 midi = decode(text)
 midi.save(MIDI_output)

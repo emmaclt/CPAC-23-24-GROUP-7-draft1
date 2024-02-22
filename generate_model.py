@@ -42,7 +42,7 @@ def decode_meta_message(line: str) -> MetaMessage:
     args = line[12:-1].split(", ")
     message_type = args.pop(0)[1:-1]
 
-    #args = [argument.split("=") for argument in args]
+    
     kwargs = {}
 
     for argument in args:
@@ -55,7 +55,7 @@ def decode_meta_message(line: str) -> MetaMessage:
 
         kwargs[key] = value
     
-    #print(f"Decoded meta message: {message_type} {kwargs}")
+    
     return MetaMessage(message_type, **kwargs)
 
 def decode(text: List[str]) -> MidiFile:
@@ -97,7 +97,8 @@ chain = markovify.Chain(dataset, state_size=state_size)
 
 print(f"Successfully generated model from {dataset_directory}! Saved to {chain_output}")
 '''
-
+#saving the chain is disabled because it exceeds the 100Mb github limit for 
+#files dimention, not allowing to commit any change while updating the code
 
 
 

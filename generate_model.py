@@ -7,11 +7,11 @@ from mido import MidiFile, MidiTrack
 from mido import Message, MetaMessage
 
 state_size=3
-dataset_directory=Path("C:/Users/enric/Desktop/markov/markov-music-generator-main/maestro-v3.0.0/2014")
-chain_output=Path("C:/Users/enric/Desktop/markov/markov-music-generator-main/model.json")
-MIDI_output=Path("C:/Users/enric/Desktop/markov/markov-music-generator-main/song.mid")
+dataset_directory=Path("./maestro-v3.0.0/2014")
+chain_output=Path("./model.json")
+MIDI_output=Path("./song.mid")
 fix_input=MIDI_output
-fixMIDI_output=Path("C:/Users/enric/Desktop/markov/markov-music-generator-main/fix_song.mid")
+fixMIDI_output=Path("./fix_song.mid")
 
 
 

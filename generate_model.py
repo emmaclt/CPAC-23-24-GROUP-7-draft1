@@ -141,11 +141,10 @@ state=(BEGIN,) * state_size
 client = pyOSC3.OSCClient()
 client.connect( ( '127.0.0.1', 7001 ) )
 
+#schedule to be repeated
 def sched(state):
     next_word = generated_chain.move(state)
     state = tuple(state[1:]) + (next_word,)
-
-
     msg = pyOSC3.OSCMessage()
     msg.setAddress("/0")
     msg.append(state[len(state)-1])

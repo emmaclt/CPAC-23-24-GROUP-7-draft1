@@ -1,8 +1,8 @@
 from pathlib import Path
 from typing import List
-import markovify
 import mido
-from markovify import Chain
+import chain
+from chain import Chain
 from mido import MidiFile, MidiTrack
 from mido import Message, MetaMessage
 
@@ -89,8 +89,9 @@ for filename in dataset_directory.iterdir():
     dataset.append(messages)
 
     print(f"Processed {filename}")
+    #print(dataset)
 
-chain = markovify.Chain(dataset, state_size=state_size)
+generated_chain = Chain(dataset, state_size=state_size)
 
 '''with open(chain_output, "w") as file:
     file.write(chain.to_json())
@@ -103,13 +104,12 @@ print(f"Successfully generated model from {dataset_directory}! Saved to {chain_o
 
 
 
-
 #GENERATE SONG
 '''
 with open(chain_output, "r") as file:
     chain = Chain.from_json(file.read())
 '''
-text = chain.walk()
+text = generated_chain.walk()
 midi = decode(text)
 midi.save(MIDI_output)
 print(f"Successfully generated song as {MIDI_output}")

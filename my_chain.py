@@ -43,7 +43,7 @@ class VariableLengthMarkovChain:
 
 
 
-
+'''
 #INITIALIZE
 dataset = [1, 2, 3, 4, 5, 3, 3, 2, 4, 1, 1, 2, 3, 5, 4, 2, 3, 3, 1, 5, 3, 2, 1, 1, 3, 5, 3, 5, 2, 3, 1, 5, 4, 3, 2, 1, 5, 5, 3, 3]
 #Max order for which the chain and probability matrix are computed (it will also be computed for all orders lower than the max one)
@@ -57,7 +57,7 @@ markov_chain = VariableLengthMarkovChain(max_order, dataset)
 
 
 #GENERATE
-state = tuple(dataset[0:max_order])
+state = tuple(dataset[0:set_order])
 for i in range(100):
     next_state = markov_chain.generate(state, set_order)
     print("Next state after", state, ":", next_state)
@@ -69,4 +69,4 @@ for i in range(100):
     state=tuple(update_state)
     #control generation/printing flow (currentlty every 1 second)
     time.sleep(1)
-
+'''

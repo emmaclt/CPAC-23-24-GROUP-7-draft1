@@ -30,8 +30,8 @@ class VariableLengthMarkovChain:
         #Ultimately if the order reaches 1, the tuple is granted to be previously encountered in the dataset
         #allowing to effectively generate the next state
         for order in range(set_order, 0, -1):
-            if state[:order] in self.transitions:
-                choices, weights = zip(*self.transitions[state[:order]].items())
+            if state[-order:] in self.transitions:
+                choices, weights = zip(*self.transitions[state[-order:]].items())
                 if len(choices)>=2 or order==1:
                     next_state = random.choices(choices, weights=weights)[0]
                     print("Max order "+str(self.max_order))

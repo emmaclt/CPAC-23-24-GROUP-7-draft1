@@ -4,10 +4,10 @@ import mido
 import pyOSC3
 import time
 from my_chain_fe import VariableLengthMarkovChain
-
+from threading import Thread
 
 max_order=8
-set_order=6
+set_order = None
 dataset_directory=Path("./maestro-v3.0.0/test")
 
 
@@ -49,9 +49,26 @@ for filename in dataset_directory.iterdir():
     print(f"Processed {filename}")
 
 
-#dataset_notes=[int(s.split('note=')[1].split(' ')[0]) for s in dataset]
-#dataset_velocity=[int(s.split('velocity=')[1].split(' ')[0]) for s in dataset]
-#dataset_time=[int(s.split('time=')[1].split(' ')[0]) for s in dataset]
+# Function to menage the received OSC messages
+def handle_message(address, tags, data, client_address):
+    global set_order
+    set_order = data[0]
+    print(f"Ricevuto messaggio da {address}: {set_order}")
+
+
+# Function to run the server in a separated thread
+def run_server():
+    
+    server = pyOSC3.OSCServer(("127.0.0.1", 57000))
+    server.addMsgHandler("/closeness", handle_message)
+
+    print(f"In ascolto")
+    
+    # Run the server
+    server.serve_forever()
+
+server_thread = Thread(target=run_server)
+server_thread.start()
 
 
 markov_chain_notes = VariableLengthMarkovChain(max_order, dataset_notes)
@@ -64,13 +81,14 @@ markov_chain_time = VariableLengthMarkovChain(max_order, dataset_times)
 #GENERATE NOTES
 
 client = pyOSC3.OSCClient()
-client.connect( ( '127.0.0.1', 7001 ) )
+client.connect( ( '127.0.0.1', 57120 ) )
 state_notes = tuple(dataset_notes[0][0:set_order])
 state_velocity = tuple(dataset_velocities[0][0:set_order])
 state_time = tuple(dataset_times[0][0:set_order])
 
 
 while True:
+    print(set_order)
     next_state_notes = markov_chain_notes.generate(state_notes, set_order)
     next_state_velocity = markov_chain_velocity.generate(state_velocity, set_order)
     next_state_time = markov_chain_time.generate(state_time, set_order)
@@ -94,10 +112,12 @@ while True:
     print("Note: "+str(next_state_notes)+" velocity: "+str(next_state_velocity)+" time: "+str(next_state_time))
 
     msg = pyOSC3.OSCMessage()
-    msg.setAddress("/0")
+    msg.setAddress("/numbers")
     out=[next_state_notes, next_state_velocity, next_state_time]
     msg.append(out)
     client.send(msg)
 
     time.sleep(1)
+    
+    
 

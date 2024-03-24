@@ -11,8 +11,6 @@ set_order = None
 dataset_directory=Path("./maestro-v3.0.0/test")
 
 
-
-
 #ENCODE METHOD
 
 def encode(file: mido.MidiFile) -> List[str]:
@@ -31,6 +29,17 @@ def encode(file: mido.MidiFile) -> List[str]:
     return notes, velocities, times
 
 
+# Function to set the tempo and the bpm of the dataset midi files 
+
+def setup_time(file: mido.MidiFile):
+    for message in file:
+        if message.type == 'set_tempo':
+            tempo = message.tempo
+            bpm = mido.tempo2bpm(tempo)
+            break
+
+    return tempo, bpm
+
 
 
 #GENERATE MODEL
@@ -47,6 +56,17 @@ for filename in dataset_directory.iterdir():
     dataset_times.append(times)
 
     print(f"Processed {filename}")
+
+
+#set tempo, bpm and ticks per beat
+    
+first_file_midi = next(dataset_directory.iterdir())
+with mido.MidiFile(first_file_midi) as file:
+    tempo, bpm = setup_time(file)
+    ticks_per_beat = file.ticks_per_beat
+
+print(tempo, bpm, ticks_per_beat)
+
 
 
 # Function to menage the received OSC messages
@@ -115,9 +135,17 @@ while True:
     msg.setAddress("/numbers")
     out=[next_state_notes, next_state_velocity, next_state_time]
     msg.append(out)
+    
+    #compute the delta time, it's the time that should pass between the last note played and the current note
+     
+    delta_time = mido.tick2second(next_state_time, ticks_per_beat, tempo)
+    print(delta_time)
+    
+    time.sleep(delta_time)
+
     client.send(msg)
 
-    time.sleep(1)
+    
     
     
 

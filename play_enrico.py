@@ -7,9 +7,9 @@ from my_chain_fe import VariableLengthMarkovChain
 from threading import Thread
 import re
 
-max_order=8
-set_order = 5
-dataset_directory=Path("./maestro-v3.0.0/test")
+max_order=3
+set_order=3
+dataset_directory=Path("./maestro-v3.0.0/2018")
 
 
 
@@ -98,6 +98,8 @@ client = pyOSC3.OSCClient()
 client.connect( ( '127.0.0.1', 57120 ) )
 state_notes = tuple(dataset_notes[0][0:set_order])
 
+
+#initialize output file to blank (file per controllare se le stringhe generate hanno senso)
 with open("Output.txt", "w") as text_file:
         print(f"", file=text_file)
 
@@ -113,36 +115,31 @@ while True:
     update_state_notes.append(next_state_notes)
     state_notes=tuple(update_state_notes)
 
-    #control generation/printing flow (currentlty every 1 second)
-    print("Note: "+str(next_state_notes))
-
-    
+   #effettiva scrittura del file di controllo 
     with open("Output.txt", "a") as text_file:
         print(f"Note: "+str(next_state_notes), file=text_file)
 
+    #divide string and extract numbers to be sent via OSC
     temp = re.findall(r'\d+', next_state_notes)
     res = list(map(int, temp))
-    print(res)
-    
     next_state_notes=res[1]
     next_state_velocity=res[2]
     next_state_time=res[3]
 
-    
+    #prepare the message
     msg = pyOSC3.OSCMessage()
     msg.setAddress("/numbers")
     out=[next_state_notes, next_state_velocity, next_state_time]
     msg.append(out)
     
     #compute the delta time, it's the time that should pass between the last note played and the current note
-     
     delta_time = mido.tick2second(next_state_time, ticks_per_beat, tempo*4)
-
-
     print(delta_time)
-    
     time.sleep(delta_time)
 
+    #print and send
+    print("Note: "+str(next_state_notes))
+    print(res)
     client.send(msg)
 
     

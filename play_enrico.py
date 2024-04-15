@@ -3,13 +3,15 @@ from typing import List
 import mido
 import pyOSC3
 import time
-from my_chain_fe import VariableLengthMarkovChain
+from my_chain import VariableLengthMarkovChain
 from threading import Thread
 import re
+from mido import MidiFile, MidiTrack
+from mido import Message, MetaMessage
 
-max_order=3
-set_order=3
-dataset_directory=Path("./maestro-v3.0.0/2018")
+max_order=5
+set_order=5
+dataset_directory=Path("./maestro-v3.0.0/test")
 
 
 
@@ -25,6 +27,7 @@ def encode(file: mido.MidiFile) -> List[str]:
         notes.append(str(message))
 
     return notes
+
 
 
 # Function to set the tempo and the bpm of the dataset midi files 
@@ -48,13 +51,17 @@ for filename in dataset_directory.iterdir():
     with mido.MidiFile(filename) as file:
         notes = encode(file)
 
-    dataset_notes.append(notes)
+    dataset_notes.extend(notes)
+    print(f"Processed {filename}")    
 
-    print(f"Processed {filename}")
+
+with open("Input.txt", "w") as text_file:
+    print(f"Note: "+str(dataset_notes), file=text_file)
+
+print(len(dataset_notes))
 
 
 #set tempo, bpm and ticks per beat
-    
 first_file_midi = next(dataset_directory.iterdir())
 with mido.MidiFile(first_file_midi) as file:
     tempo, bpm = setup_time(file)
@@ -96,28 +103,32 @@ markov_chain_notes = VariableLengthMarkovChain(max_order, dataset_notes)
 
 client = pyOSC3.OSCClient()
 client.connect( ( '127.0.0.1', 57120 ) )
-state_notes = tuple(dataset_notes[0][0:set_order])
-
+state_notes = tuple(dataset_notes[0:set_order])
+all_states=[]
+all_states.extend(list(state_notes))
+text=[]
 
 #initialize output file to blank (file per controllare se le stringhe generate hanno senso)
 with open("Output.txt", "w") as text_file:
         print(f"", file=text_file)
 
+i=0
 
-while True:
+while i<1000:
     print(set_order)
+    state_notes=tuple(all_states[(len(all_states)-set_order):len(all_states)])
     next_state_notes = markov_chain_notes.generate(state_notes, set_order)
+    all_states.append(next_state_notes)
 
-    #update current state with next state requires the tuple to be converted to list,
-    #manipulated and converted back to tuple
-    update_state_notes=list(state_notes)
-    update_state_notes.pop(0)
-    update_state_notes.append(next_state_notes)
-    state_notes=tuple(update_state_notes)
-
-   #effettiva scrittura del file di controllo 
+    #effettiva scrittura del file di controllo 
     with open("Output.txt", "a") as text_file:
         print(f"Note: "+str(next_state_notes), file=text_file)
+
+    text.append(str(next_state_notes))
+    #print("Note: "+str(next_state_notes))
+    
+    with open("state_notes.txt", "a") as text_file:
+        print(f"Note: "+str(state_notes), file=text_file)
 
     #divide string and extract numbers to be sent via OSC
     temp = re.findall(r'\d+', next_state_notes)
@@ -133,16 +144,64 @@ while True:
     msg.append(out)
     
     #compute the delta time, it's the time that should pass between the last note played and the current note
-    delta_time = mido.tick2second(next_state_time, ticks_per_beat, tempo*4)
+    delta_time = mido.tick2second(next_state_time, ticks_per_beat, tempo*2)
     print(delta_time)
     time.sleep(delta_time)
 
     #print and send
-    print("Note: "+str(next_state_notes))
     print(res)
     client.send(msg)
 
+
+    i=i+1
     
     
+
+
+
+
+
+
+
+
+
+def decode_meta_message(line: str) -> MetaMessage:
+    args = line[12:-1].split(", ")
+    message_type = args.pop(0)[1:-1]
+
+    #args = [argument.split("=") for argument in args]
+    kwargs = {}
+
+    for argument in args:
+        key, value = argument.split("=")
+        
+        if value.startswith("'") and value.endswith("'"): # string, we gotta remove the quotes
+            value = value[1:-1]
+        elif value.isnumeric():
+            value = int(value)
+
+        kwargs[key] = value
     
+    #print(f"Decoded meta message: {message_type} {kwargs}")
+    return MetaMessage(message_type, **kwargs)
+
+def decode(text: List[str]) -> MidiFile:
+    track = MidiTrack()
+
+    for line in text:
+        if line.startswith("MetaMessage"):
+            track.append(decode_meta_message(line))
+            continue
+
+        try:
+            track.append(Message.from_str(line))
+        except:
+            print(f"Failed to decode message: {line}")
+    
+    return MidiFile(tracks=[track])
+
+
+MIDI_output=Path("./song.mid")
+midi = decode(text)
+midi.save(MIDI_output)
 

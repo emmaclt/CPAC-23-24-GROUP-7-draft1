@@ -5,13 +5,13 @@ s.waitForBoot {
 
 	b = NetAddr.new("127.0.0.1", 57000);
 	// Funzione che manda numeri causali che rappresentano il set_order del markov model
-	~valori = [1, 2, 3, 4, 5, 6, 7, 8];
+	~valori = [1, 2, 3, 4, 5];
 	~close = Routine.new({
 		inf.do {
 			var chosen = ~valori.choose;
 			chosen.postln;
 			b.sendMsg("/closeness", chosen);
-			1.wait;
+			3.wait;
     }
 }).play;
 

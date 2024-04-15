@@ -104,7 +104,9 @@ markov_chain_notes = VariableLengthMarkovChain(max_order, dataset_notes)
 client = pyOSC3.OSCClient()
 client.connect( ( '127.0.0.1', 57120 ) )
 state_notes = tuple(dataset_notes[0:set_order])
-all_states=[]
+#list containing all the generated states from which (line 121) 
+#the current state is extracted based on the set_order
+all_states=[] 
 all_states.extend(list(state_notes))
 text=[]
 

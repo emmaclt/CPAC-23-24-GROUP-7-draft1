@@ -33,7 +33,9 @@ SynthDef(\clean, {
 OSCdef.new(\0,
 	{
 		arg msg;
+		if( msg[4] != 0.0,{
 		x=Synth.new(\clean, [\freq, msg[1].midicps, \amp, msg[2].linexp(0, 127, 0.5, 1), \dur, 3*msg[4]]);
+		},{});
 		postln('');
 		postln(msg[1]);
 		postln(msg[2]);

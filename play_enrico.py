@@ -141,6 +141,7 @@ for row in notes_int_dur:
 
 dur_values = [row[3] for row in notes_int_dur]
 max_dur_value = max(dur_values)
+min_dur_value = min(dur_values)
 for row in notes_int_dur:
     row[3]=round(range_map(max_dur_value, 0, dur_quantization, 0, row[3]))
 
@@ -227,7 +228,7 @@ while True:
     next_state_notes=res[0]
     next_state_velocity=range_map(velocity_quantization, 0, max_velocity_value, 0, res[1])
     next_state_time=range_map(time_quantization, 0, max_time_value, 0, res[2])
-    next_state_dur= mido.tick2second(range_map(dur_quantization, 0, max_dur_value, 0, res[3]), ticks_per_beat, tempo)
+    next_state_dur= mido.tick2second(range_map(dur_quantization, 0, max_dur_value, min_dur_value, res[3]), ticks_per_beat, tempo)
 
     #prepare the message
     msg = pyOSC3.OSCMessage()

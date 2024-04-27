@@ -1,12 +1,30 @@
 s.boot
 
 (
+
+
+	b = NetAddr.new("127.0.0.1", 57000);
+	// Funzione che manda numeri causali che rappresentano il set_order del markov model
+	~valori = [1, 2, 3, 4, 5, 6, 7, 8];
+
+	~close = Routine.new({
+		inf.do {
+			var chosen = ~valori.choose;
+			chosen.postln;
+			b.sendMsg("/closeness", chosen);
+			3.wait;
+    }
+}).play;
+
+
+
+
 SynthDef(\clean, {
-	arg amp, freq, time;
-	var env = Env([0, amp, 0], [time/1000, time/200]);
+	arg amp, freq, dur;
+	var env = Env([0, amp, 0], [dur/2, dur/2]);
 	var in;
 	in=SinOsc.ar(freq)*EnvGen.kr(env, doneAction: Done.freeSelf);
-	Out.ar([0,1], in*0.1);
+	Out.ar([0,1], in*0.05);
 }).add;
 
 
@@ -15,16 +33,16 @@ SynthDef(\clean, {
 OSCdef.new(\0,
 	{
 		arg msg;
-		x=Synth.new(\clean, [\freq, msg[2].midicps, \amp, msg[3].linexp(0, 127, 0.5, 1), \time, 3*msg[4]]);
+		x=Synth.new(\clean, [\freq, msg[1].midicps, \amp, msg[2].linexp(0, 127, 0.5, 1), \dur, 3*msg[4]]);
 		postln('');
 		postln(msg[1]);
 		postln(msg[2]);
 		postln(msg[3]);
 		postln(msg[4]);
 	},
-	'/0',
+	'/numbers',
 	nil,
-	7001
+	57120
 );
 )
 

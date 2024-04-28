@@ -6,8 +6,7 @@ import time
 from my_chain import VariableLengthMarkovChain
 from threading import Thread
 import re
-from mido import MidiFile, MidiTrack
-from mido import Message, MetaMessage
+
 
 #PARAMETERS------------------------------------------------------------------------------
 

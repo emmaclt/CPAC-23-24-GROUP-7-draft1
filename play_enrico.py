@@ -12,11 +12,11 @@ import re
 
 max_order=8
 set_order=1
-velocity_quantization=32
+velocity_quantization=16
 time_quantization=64
 dur_quantization=64
-tempo_modifier=8
-dataset_directory=Path("./maestro-v3.0.0/test")
+tempo_modifier=1
+dataset_directory=Path("./maestro-v3.0.0/2017")
 
 
 
@@ -47,7 +47,7 @@ def setup_time(file: mido.MidiFile):
 
     return tempo, bpm
 
-#Function to change map variables from one range to another
+#Function to map variables from one range to another
 def range_map(OldMax, OldMin, NewMax, NewMin, OldValue):
     OldRange = (OldMax - OldMin)  
     NewRange = (NewMax - NewMin)  
@@ -142,7 +142,7 @@ dur_values = [row[3] for row in notes_int_dur]
 max_dur_value = max(dur_values)
 min_dur_value = min(dur_values)
 for row in notes_int_dur:
-    row[3]=round(range_map(max_dur_value, 0, dur_quantization, 0, row[3]))
+    row[3]=round(range_map(max_dur_value, min_dur_value, dur_quantization, 0, row[3]))
 
 #Print stuff for control purposes, to be deleated once the code is definitive
 with open("Notes_int_dur_ranged.txt", "w") as text_file:
@@ -227,7 +227,7 @@ while True:
     next_state_notes=res[0]
     next_state_velocity=range_map(velocity_quantization, 0, max_velocity_value, 0, res[1])
     next_state_time=range_map(time_quantization, 0, max_time_value, 0, res[2])
-    next_state_dur= mido.tick2second(range_map(dur_quantization, 0, max_dur_value, min_dur_value, res[3]), ticks_per_beat, tempo)
+    next_state_dur= mido.tick2second(range_map(dur_quantization, 0, max_dur_value, 50, res[3]), ticks_per_beat, tempo)
 
     #prepare the message
     msg = pyOSC3.OSCMessage()

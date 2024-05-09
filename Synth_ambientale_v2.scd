@@ -153,7 +153,7 @@ SynthDef(\deepSound, {
 }).add;
 )
 
-Synth.new(\deepSound);.
+Synth.new(\deepSound);
 
 
 
@@ -179,7 +179,7 @@ Synth.new(\relaxingSound);
 
 (
 SynthDef(\relaxingSquareTriangle, {
-	arg freq=440, amp=0.2, time=2, detune=0, filterFreq=200, pan=0;
+	arg freq=880, amp=0.2, time=2, detune=0, filterFreq=400, pan=0;
 	var env =EnvGen.ar( Env.new([0,amp, 0], [time/1000, time/200]));
 
 	var square = LFPulse.ar(freq * (1 + detune/100), 0, 0.7); // Onda quadra con detune

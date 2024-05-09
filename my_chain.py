@@ -32,6 +32,7 @@ class VariableLengthMarkovChain:
         for order in range(set_order, 0, -1):
             if state[(set_order-order):set_order] in self.transitions:
                 choices, weights = zip(*self.transitions[state[(set_order-order):set_order]].items())
+                print("Choices "+str(choices)+", weights "+str(weights))
                 next_state = random.choices(choices, weights=weights)[0]
                 print("Max order "+str(self.max_order))
                 print("Set order "+str(set_order))

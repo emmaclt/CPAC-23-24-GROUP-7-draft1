@@ -227,7 +227,7 @@ z=Synth.new(\reverb);
 
 {
 	var envBuf, envSignal, buffer;
-	~buffer = Buffer.readChannel(s, "C:/Users/enric/Desktop/Samples/string1.wav");
+	~buffer = Buffer.readChannel(s, thisProcess.nowExecutingPath.dirname +/+ "string1.wav");
 	// The grain envelope
 	~envBuf = Buffer.alloc(s, s.sampleRate, 1);
 	envSignal = Signal.newClear(s.sampleRate).waveFill({|x| (1 - x.pow(2)).pow(1)}, -1.0, 1.0);

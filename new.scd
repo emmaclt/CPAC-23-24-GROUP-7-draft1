@@ -1,6 +1,7 @@
 ServerOptions.inDevices;
-Server.default.options.inDevice_("Gruppo microfoni (Realtek(R) Audio");
+Server.default.options.inDevice_("MacBook Pro Microphone");
 Server.default.options.memSize=8192*50;
+s.boot;
 
 (
 SynthDef(\reverb, {
@@ -262,8 +263,8 @@ OSCdef.new(\0,
 			chosen.postln;
 			b.sendMsg("/closeness", chosen);
 			3.wait;
-    }
-}).play;
+	        }
+    }).play;
 
 )
 
@@ -272,6 +273,7 @@ a.set(\freq, 500);
 y.set(\amp, 1);
 y.set(\cutoff, 1000);
 
+s.quit;
 
 
 //z.set(\shimmerPitch, 2);

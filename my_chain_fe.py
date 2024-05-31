@@ -1,23 +1,27 @@
-from collections import defaultdict
-import random
+#imports: 
+
+
+from collections import defaultdict # defaultdict - dictionary subclass 
+import random                       # to generate random numbers 
 import time
 
 
 
-#MARKOV CHAIN CLASS
+#MARKOV CHAIN CLASS: it encapsulates the functionality of the variable order markov chain
 class VariableLengthMarkovChain:
     def __init__(self, max_order, dataset):
-        self.max_order = max_order
-        self.dataset = dataset
+        self.max_order = max_order      # maximum order of the chain
+        self.dataset = dataset          # dataset used to build the markov chain
+
         #Dictionary inside dictionary: the first key is the current state to which another dictionary is linked.
         #The second dictionary has the possible outcome as key and the probability (integer number) as the linked value.
-        self.transitions = defaultdict(lambda: defaultdict(int))
-        self._build_transitions()
+        self.transitions = defaultdict(lambda: defaultdict(int)) # -> used to store the transition probabilities
+        self._build_transitions()       # method called to build the transitions from the dataset
         
     def _build_transitions(self):
         #Builds the probability matrix for all orders equal or less than max_order
         for midi in self.dataset:
-            for order in range(1, self.max_order+1):
+            for order in range(1, self.max_order+1):        # iterates from 1 to 
                 for i in range(len(midi) - order):
                     state = tuple(midi[i:i+order])
                     next_state = midi[i+order]

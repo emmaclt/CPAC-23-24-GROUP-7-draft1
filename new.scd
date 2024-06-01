@@ -1,6 +1,7 @@
-ServerOptions.inDevices;
+ServerOptions.inDevices;		 //to check the available input devices 
 Server.default.options.inDevice_("MacBook Pro Microphone");
-Server.default.options.memSize=8192*50;
+// extensive audio processing requires adjusting the memory size 
+Server.default.options.memSize=8192*50;			//sets the memory size for the server. it allocates 409600 memory units for the server 
 s.boot;
 
 (

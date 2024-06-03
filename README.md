@@ -16,7 +16,7 @@ Final project for the 'Creative Programming and Computing' course of MSc. in Mus
 - [Emma Coletta](https://github.com/emmaclt)
 - [Enrico Dalla Mora](https://github.com/EnricoDallaMora)
 - [Federico Ferreri](https://github.com/federicoalferreri)
-- [Lorenzo Previati]()
+- [Lorenzo Previati](https://github.com/LorenzoPreviati22)
 
 ## Links
 - [Project Proposal Presentation]()
@@ -28,18 +28,25 @@ Final project for the 'Creative Programming and Computing' course of MSc. in Mus
 
 <img width="1440" alt="flowchart" src="https://github.com/emmaclt/CPAC-23-24-GROUP-7-draft1/assets/115798271/20c40775-68e2-4a11-92a1-da18a91f88d8">
 
-### Hardware and Software Technology
+### Hardware and Software Implementation
 
 Our testing development setup involved:
-- [Xbox Kinect Technology]()
+- [Xbox Kinect Technology](https://en.wikipedia.org/wiki/Kinect)
   - motion detection 
-- [TouchDesigner by Derivative.co]()
+- [TouchDesigner by Derivative.ca](https://derivative.ca)
   - motion mapping
   - visual and graphics
-- [Python]()
+- [Python](https://www.python.org/downloads/)
+  - variable markov chain algorithm implementation
   - music sequence generation and composition
-- [SuperCollider software]()
+- [SuperCollider software](https://supercollider.github.io)
   – sound synthesis
-- [Open Sound Control]()
-  – communication protocol
-## 
+- [Open Sound Control](https://opensoundcontrol.stanford.edu/index.html)
+  – networking and communication protocol
+
+### External Resources
+- [MAESTRO-v3.0.0 dataset](https://magenta.tensorflow.org/datasets/maestro#v300) by [Magenta](https://github.com/magenta/magenta)
+  - midi files used to generate music sequences
+- []()
+### Python Dependencies 
+- 

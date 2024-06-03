@@ -47,9 +47,9 @@ Our testing development setup involved:
   - networking and communication protocol
 
 ### External Resources
-- [MAESTRO-v3.0.0 dataset](https://magenta.tensorflow.org/datasets/maestro#v300) by [Magenta](https://github.com/magenta/magenta)
+- [MAESTRO-v3.0.0 dataset](https://magenta.tensorflow.org/datasets/maestro#v300) [^1] by [Magenta](https://github.com/magenta/magenta)
   - midi files used to generate music sequences
-- [Markov Chain?]()
+<!--- [Markov Chain?]()-->
 
 ### Dependencies 
 - Python
@@ -65,15 +65,16 @@ Our testing development setup involved:
   - [TouchDesigner](https://derivative.ca)
   - [Python](https://www.python.org/downloads/)
   - [SuperCollider](https://supercollider.github.io)
-  - [python requirements]()
+  – Python Dependencies
 
 ### How to
 1. Make sure you have all software requirements mentioned above installed
 2. Set up your hardware and software (TouchDesigner) communication
 3. Execute the first ... lines of [new.scd](./new.scd)
-4. Run [play_enrico.py](./)
-5. Execute the rest of [new.scd]
+4. Run [play_enrico.py](./play_enrico.py)
+5. Execute the rest of [new.scd](./new.scd)
 6. Play with the installation moving around in space and obviously closing the distance between you and the other user(s). 
+
 
 
 

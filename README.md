@@ -36,7 +36,8 @@ Our testing development setup involved:
 - [TouchDesigner by Derivative.co]()
   - motion mapping
   - visual and graphics
-– [Python]()
+
+- [Python]()
   - music sequence generation and composition
 – [SuperCollider software]()
   – sound synthesis

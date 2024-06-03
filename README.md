@@ -21,14 +21,21 @@ Developed by:
 - [Lorenzo Previati](https://github.com/LorenzoPreviati22)
 
 ## Links
-- [Project Proposal Presentation]()
+- [Project Proposal Presentation](./prototipo_cpac.pdf)
 - [Final Project Presentation]()
 - [📄Report]()
 - [🎞️Video Demo]()
 
 ## Flowchart and Technical Summary
+<!--
 
-<img width="1440" alt="flowchart" src="https://github.com/emmaclt/CPAC-23-24-GROUP-7-draft1/assets/115798271/20c40775-68e2-4a11-92a1-da18a91f88d8">
+<img width="813" alt="Screenshot 2024-06-04 at 01 37 49" src="https://github.com/emmaclt/CPAC-23-24-GROUP-7-draft1/assets/115798271/0fd18ac1-0e0a-4ff6-b65b-8fcd646241b6">
+
+<img width="1001" alt="Screenshot 2024-06-04 at 01 40 30" src="https://github.com/emmaclt/CPAC-23-24-GROUP-7-draft1/assets/115798271/1733e5d1-fcc9-4297-9ceb-42640fc45ec4">
+-->
+
+
+##
 
 ### Hardware and Software Implementation
 
@@ -56,15 +63,20 @@ Our testing development setup involved:
   - [Mido - MIDI Objects for Python](https://github.com/mido/mido)
   - [pyOSC3](https://github.com/Qirky/pyOSC3.git)
 
+## Final Considerations
+### Known Issues
+
+### Possible Improvements
+
 ## Run on your machine
 
 ### Requirements
 - Hardware
   - Microsoft Kinect Xbox 360
 - Software:
-  - [TouchDesigner](https://derivative.ca)
-  - [Python](https://www.python.org/downloads/)
-  - [SuperCollider](https://supercollider.github.io)
+  - TouchDesigner: [download](https://derivative.ca/download)
+  - Python: [download](https://www.python.org/downloads/)
+  - SuperCollider: [download](https://supercollider.github.io/downloads)
   – Python Dependencies
 
 ### How to
@@ -73,7 +85,14 @@ Our testing development setup involved:
 3. Execute the first ... lines of [new.scd](./new.scd)
 4. Run [play_enrico.py](./play_enrico.py)
 5. Execute the rest of [new.scd](./new.scd)
-6. Play with the installation moving around in space and obviously closing the distance between you and the other user(s). 
+6. Everything should be up and running now! Have fun playing around with the installation and seeing how both visual and audio evolve when enclosing the distance between you and other user(s)
+
+## Bibliography
+[^1]: Curtis Hawthorne, Andriy Stasyuk, Adam Roberts, Ian Simon, Cheng-Zhi Anna Huang,
+  Sander Dieleman, Erich Elsen, Jesse Engel, and Douglas Eck. "Enabling
+  Factorized Piano Music Modeling and Generation with the MAESTRO Dataset."
+  In International Conference on Learning Representations, 2019.
+
 
 
 

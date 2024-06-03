@@ -11,7 +11,9 @@ The intention behind this project is to explore and abractly represent what huma
 The **final purpose** of the installation is for the user to perceive *human connection* as something *empowering* and *valuable* and to highlight the joy that comes from choosing to transition from solitude to community. Closeness, sharing and openness are all choices that the installation wants to promote and encourage. 
 
 ##  
-Final project for the 'Creative Programming and Computing' course of MSc. in Music and Acoustic Engineering @ Politecnico di Milano (a.y. 2023/2024) held by [Prof. Massimiliano Zanoni](http://www.massimilianozanoni.it). Developed by:
+Final project for the '_Creative Programming and Computing_' course of MSc. in _Music and Acoustic Engineering @ Politecnico di Milano_ (a.y. 2023/2024) held by [Prof. Massimiliano Zanoni](http://www.massimilianozanoni.it). 
+
+Developed by:
 
 - [Emma Coletta](https://github.com/emmaclt)
 - [Enrico Dalla Mora](https://github.com/EnricoDallaMora)
@@ -68,7 +70,7 @@ Our testing development setup involved:
 ### How to
 1. Make sure you have all software requirements mentioned above installed
 2. Set up your hardware and software (TouchDesigner) communication
-3. Execute the first ... lines of [new.scd]()
+3. Execute the first ... lines of [new.scd](./new.scd)
 4. Run [play_enrico.py](./)
 5. Execute the rest of [new.scd]
 6. Play with the installation moving around in space and obviously closing the distance between you and the other user(s). 

@@ -40,13 +40,38 @@ Our testing development setup involved:
   - variable markov chain algorithm implementation
   - music sequence generation and composition
 - [SuperCollider software](https://supercollider.github.io)
-  – sound synthesis
+  - sound synthesis
 - [Open Sound Control](https://opensoundcontrol.stanford.edu/index.html)
-  – networking and communication protocol
+  - networking and communication protocol
 
 ### External Resources
 - [MAESTRO-v3.0.0 dataset](https://magenta.tensorflow.org/datasets/maestro#v300) by [Magenta](https://github.com/magenta/magenta)
   - midi files used to generate music sequences
-- []()
-### Python Dependencies 
-- 
+- [Markov Chain?]()
+
+### Dependencies 
+- Python
+  - [Mido - MIDI Objects for Python](https://github.com/mido/mido)
+  - [pyOSC3](https://github.com/Qirky/pyOSC3.git)
+
+## Run on your machine
+
+### Requirements
+- Hardware
+  - Microsoft Kinect Xbox 360
+- Software:
+  - [TouchDesigner](https://derivative.ca)
+  - [Python](https://www.python.org/downloads/)
+  - [SuperCollider](https://supercollider.github.io)
+  - [python requirements]()
+
+### How to
+1. Make sure you have all software requirements mentioned above installed
+2. Set up your hardware and software (TouchDesigner) communication
+3. Execute the first ... lines of [new.scd]()
+4. Run [play_enrico.py](./)
+5. Execute the rest of [new.scd]
+6. Play with the installation moving around in space and obviously closing the distance between you and the other user(s). 
+
+
+

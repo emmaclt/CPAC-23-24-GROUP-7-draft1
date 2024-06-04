@@ -33,7 +33,7 @@ Developed by:
 
 <img width="1001" alt="Screenshot 2024-06-04 at 01 40 30" src="https://github.com/emmaclt/CPAC-23-24-GROUP-7-draft1/assets/115798271/1733e5d1-fcc9-4297-9ceb-42640fc45ec4">
 -->
-
+![flowchart illustration]()
 
 ##
 
